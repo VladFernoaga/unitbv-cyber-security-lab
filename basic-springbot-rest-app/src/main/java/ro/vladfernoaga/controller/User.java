@@ -1,4 +1,4 @@
-package ro.vladfernoaga;
+package ro.vladfernoaga.controller;
 
 public class User {
 
