@@ -20,9 +20,20 @@ public class UserController {
 	public User getUser(@RequestParam(value = "name") String name) {
 		return new User(counter.incrementAndGet(), name, new Random().nextInt(99));
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/userAdmin")
+	public User getUserAdmin(@RequestParam(value = "name") String name) {
+		return new User(counter.incrementAndGet(), name, new Random().nextInt(99));
+	}
 
 	@PostMapping("/user")
 	public String addUser(@RequestBody User greeting) {
 		return "User added sucessfuly";
+	}
+	
+	@GetMapping("/public")
+	public String getPublic() {
+		return "Public";
 	}
 }
