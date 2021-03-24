@@ -20,7 +20,7 @@ public class HelloController {
         return "Hello Private!";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin")
     public String HelloAdmin() {
 
