@@ -37,7 +37,8 @@ public class JwtAuthenticationController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
 			throws Exception {
 
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		System.out.println(authenticationRequest.getUsername() + " "+authenticationRequest.getPassword());
+		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = jwtInMemoryUserDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
