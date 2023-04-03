@@ -25,7 +25,7 @@ public class SecurityConfig {
         http.csrf()
           .disable()
           .authorizeHttpRequests()
-          .requestMatchers("*/book/*")
+          .requestMatchers("/book/**")
           .hasAnyRole("USER", "ADMIN")
           .requestMatchers(HttpMethod.GET, "/book/**")
           .anonymous()
@@ -56,7 +56,7 @@ public class SecurityConfig {
           .build());
         manager.createUser(User.withUsername("admin")
           .password(bCryptPasswordEncoder.encode("adminPass"))
-          .roles("USER", "ADMIN")
+          .roles("ADMIN", "USER")
           .build());
         return manager;
     }
