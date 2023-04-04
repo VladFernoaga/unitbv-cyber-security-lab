@@ -2,7 +2,6 @@ package com.unitbv.bookshop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -18,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class BasicAuthSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -27,7 +26,7 @@ public class SecurityConfig {
           .authorizeHttpRequests()
           .requestMatchers("/book/**")
           .hasAnyRole("USER", "ADMIN")
-          .requestMatchers(HttpMethod.GET, "/book/**")
+          .requestMatchers("/public/**")
           .anonymous()
           .and()
           .httpBasic()
@@ -56,7 +55,7 @@ public class SecurityConfig {
           .build());
         manager.createUser(User.withUsername("admin")
           .password(bCryptPasswordEncoder.encode("adminPass"))
-          .roles("ADMIN", "USER")
+          .roles("ADMIN")
           .build());
         return manager;
     }

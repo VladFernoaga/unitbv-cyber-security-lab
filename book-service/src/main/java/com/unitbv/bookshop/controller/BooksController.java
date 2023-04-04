@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,8 @@ public class BooksController {
     private BookService bookService;
 
     // Only for ADMIN - ROLE ADMIN
-//    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("book")
     public ResponseEntity<String> addBook(@RequestBody Book book) {
 
 
@@ -40,13 +41,7 @@ public class BooksController {
         }
     }
 
-    // For all users (Public)
-    @GetMapping()
-    public List<Book> getBooks() {
-        return bookService.getBooks();
-    }
-
-    // For registerd users - ROLE CUSTOMER
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{name}")
     public ResponseEntity<Book> getBookByName(@PathVariable("name") String name) {
         Optional<Book> book = bookService.findByName(name);
@@ -59,7 +54,7 @@ public class BooksController {
         }
     }
 
-    // Only for ADMIN - ROLE ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> removeBook(@PathVariable("id") int id) {
         if (bookService.removeBook(id)) {
